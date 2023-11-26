@@ -1,0 +1,7 @@
+{
+  "name": "jeeves-fe",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

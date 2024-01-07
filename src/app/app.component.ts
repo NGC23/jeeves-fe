@@ -5,14 +5,49 @@ import { Component } from '@angular/core';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
+  
   public appPages = [
-    { title: 'Inbox', url: '/folder/inbox', icon: 'mail' },
-    { title: 'Outbox', url: '/folder/outbox', icon: 'paper-plane' },
-    { title: 'Favorites', url: '/folder/favorites', icon: 'heart' },
-    { title: 'Archived', url: '/folder/archived', icon: 'archive' },
-    { title: 'Trash', url: '/folder/trash', icon: 'trash' },
-    { title: 'Spam', url: '/folder/spam', icon: 'warning' },
+    { 
+      title: 'Calendar',
+      url: '/calendar', 
+      icon: 'calendar' 
+    },
+    { 
+      title: 'Payments',
+      url: '/payments', 
+      icon: 'cash' 
+    },
+    { 
+      title: 'Events',
+      url: '/events', 
+      icon: 'calendar' 
+    },
+    { 
+      title: 'Event Broadcast',
+      url: '/event-broadcast', 
+      icon: 'send' 
+    },
+    { 
+      title: 'Contacts',
+      url: '/contacts', 
+      icon: 'person' 
+    },
+    { 
+      title: 'Templates',
+      url: '/templates', 
+      icon: 'document' 
+    },
+    { 
+      title: 'Settings',
+      url: '/settings', 
+      icon: 'settings' 
+    },
+    { 
+      title: 'Logout',
+      url: '/logout', 
+      icon: 'exit' 
+    }
   ];
-  public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
+  
   constructor() {}
 }

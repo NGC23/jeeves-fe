@@ -1,0 +1,135 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Event Broadcast</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <ion-row>
+    <ion-col size="12">
+      <ngx-datatable
+        [rows]="data"
+        [ngClass]="tableStyle"
+        [rowHeight]="'auto'"
+        [headerHeight]="50"
+        [footerHeight]="50"
+        [columnMode]="'force'"
+        [limit]="10"
+      >
+      >
+        <ngx-datatable-column name="Title"></ngx-datatable-column>
+        <ngx-datatable-column name="Status"></ngx-datatable-column>
+        <ngx-datatable-column name="Scheduled At"></ngx-datatable-column>
+
+        <ngx-datatable-column name="Actions" [sortable]="false">
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            <ion-button size="small" fill="outline" (click)="open(row)"
+              >Manage</ion-button
+            >
+          </ng-template>
+        </ngx-datatable-column>
+	    </ngx-datatable>
+    </ion-col>
+  </ion-row>
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="center" #fab>
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button id="eventBroadcastWhatsappModal" (click)="this.newEventBroadcast.type = 'whatsapp'">
+        <ion-icon name="logo-whatsapp"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button id="eventBroadcastInstagramModal" (click)="this.newEventBroadcast.type = 'instagram'">
+        <ion-icon name="logo-instagram"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button id="eventBroadcastModal" (click)="this.newEventBroadcast.type = 'email'">
+        <ion-icon name="mail-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+
+
+  <!-- MODALS -->
+  <ion-modal
+  #eventBroadcastModal
+  trigger="eventBroadcastModal"
+>
+  <ng-template>
+    <ion-header class="ion-no-border">
+      <ion-toolbar color="light">
+        <ion-buttons slot="start">
+          <ion-button [strong]="true" (click)="eventBroadcastModal.dismiss()">Close</ion-button>
+        </ion-buttons>
+        <ion-title>New Broadcast</ion-title>
+        <ion-buttons slot="end">
+          <ion-button color="primary" [strong]="true" (click)="scheduleEvent()" [disabled]="!newEventBroadcast.title">Save</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding modal">
+      <ion-list>
+        <ion-label>Event Broadcast Content:</ion-label>
+        <ion-item>
+          <ion-input
+          type="text"
+          [(ngModel)]="newEventBroadcast.title"
+          placeholder="Event Name"
+        ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-textarea
+          [rows]="5"
+          [(ngModel)]="newEventBroadcast.description"
+          placeholder="Event Description"
+          ></ion-textarea>
+        </ion-item>
+        <ion-button expand="full">
+          <ion-icon lazy="true" slot="start" name="image"></ion-icon>
+          <ion-label slot="end"></ion-label>
+          <input type="file" (change)="loadImageFromDevice($event)" id="file-input"
+            accept="image/png, image/jpeg">
+        </ion-button>
+      </ion-list>
+
+      <ion-label>Event Schedule Details:</ion-label>
+      <ion-list>
+        <ion-item>
+          <ion-toggle [(ngModel)]="newEventBroadcast.allDay">All Day</ion-toggle>
+        </ion-item>
+
+        <ion-item (click)="showStart = !showStart">
+          <ion-label>Starts</ion-label>
+          <ion-text slot="end">{{this.newEventBroadcast.startTime | date:'medium'}}</ion-text>
+        </ion-item>
+
+        <ion-datetime 
+          #start 
+          *ngIf="showStart" 
+          [(ngModel)]="newEventBroadcast.startTime"
+          [presentation]="newEventBroadcast.allDay ? 'date' : 'time-date'"
+          (ionChange)="startChanged(start.value)"
+        ></ion-datetime>
+        
+        <ion-item (click)="showEnd = !showEnd">
+          <ion-label>Ends</ion-label>
+          <ion-text slot="end">{{this.newEventBroadcast.endTime | date:'medium'}}</ion-text>
+        </ion-item>
+
+        <ion-datetime 
+          #end 
+          *ngIf="showEnd" 
+          [(ngModel)]="newEventBroadcast.endTime"
+          [presentation]="newEventBroadcast.allDay ? 'date' : 'time-date'"
+          (ionChange)="endChanged(end.value)"
+        ></ion-datetime>
+      </ion-list>
+      <ion-button (click)="scheduleEvent()" class="md button button-small button-outline ion-activatable ion-focusable hydrated">Create new Event Broadcast</ion-button>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+</ion-content>

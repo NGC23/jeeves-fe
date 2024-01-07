@@ -42,7 +42,7 @@ export class EventService {
       user_id: event.user_id,
     })
       .pipe(
-        catchError((err) => of(err))
+        catchError((err) => { throw(err) })
       )
   }
 }

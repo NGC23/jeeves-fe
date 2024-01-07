@@ -11,7 +11,7 @@ export class EventService {
 
   constructor(private httpClient: HttpClient) { }
 
-  public getAll(userId: string) {
+  public getAll(userId: string): Array<any> {
     let events: any[] = [];
     this.httpClient.get(`${this.BASE_URL}/${userId}`).subscribe((data: any) => {
       for(let i = 0; i < data.length; i++) {
@@ -31,10 +31,6 @@ export class EventService {
 
     console.log("events in service", events);
     return events;
-  }
-
-  public async getAllEvents(userId: string) {
-    return this.httpClient.get<any>(`${this.BASE_URL}/${userId}`).toPromise();    
   }
 
   public create(event: any): Observable<any> {

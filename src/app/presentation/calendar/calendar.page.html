@@ -41,75 +41,10 @@
   </calendar>
 
   <ion-fab vertical="bottom" horizontal="center" slot="fixed">
-    <ion-fab-button id="eventModal">
+    <ion-fab-button href="/event/create">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-
-  <ion-modal
-    #modal
-    trigger="eventModal"
-    [presentingElement]="presentingElement"
-  >
-    <ng-template>
-      <ion-header class="ion-no-border">
-        <ion-toolbar color="light">
-          <ion-buttons slot="start">
-            <ion-button [strong]="true" (click)="modal.dismiss()">Close</ion-button>
-          </ion-buttons>
-          <ion-title>New Event</ion-title>
-          <ion-buttons slot="end">
-            <ion-button color="primary" [strong]="true" (click)="scheduleEvent()" [disabled]="!newEvent.title">Save</ion-button>
-          </ion-buttons>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content class="ion-padding modal">
-        
-        <div class="group">
-          <ion-input
-            type="text"
-            [(ngModel)]="newEvent.title"
-            placeholder="Event Name"
-          ></ion-input>
-        </div>
-
-        <div class="group">
-          <ion-item>
-            <ion-label>All Day</ion-label>
-            <ion-toggle [(ngModel)]="newEvent.allDay"></ion-toggle>
-          </ion-item>
-
-          <ion-item (click)="showStart = !showStart">
-            <ion-label>Starts</ion-label>
-           <ion-text slot="end">{{this.newEvent.startTime | date:'medium'}}</ion-text>
-          </ion-item>
-
-          <ion-datetime 
-            #start 
-            *ngIf="showStart" 
-            [(ngModel)]="newEvent.startTime"
-            [presentation]="newEvent.allDay ? 'date' : 'time-date'"
-            (ionChange)="startChanged(start.value)"
-          ></ion-datetime>
-
-          <ion-item (click)="showEnd = !showEnd">
-            <ion-label>Ends</ion-label>
-           <ion-text slot="end">{{this.newEvent.endTime | date:'medium'}}</ion-text>
-          </ion-item>
-
-          <ion-datetime 
-            #end 
-            *ngIf="showEnd" 
-            [(ngModel)]="newEvent.endTime"
-            [presentation]="newEvent.allDay ? 'date' : 'time-date'"
-            (ionChange)="endChanged(end.value)"
-          ></ion-datetime>
-
-        </div>
-      </ion-content>
-    </ng-template>
-  </ion-modal>
-
 </ion-content>
 
 

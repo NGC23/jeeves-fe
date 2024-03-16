@@ -4,12 +4,8 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'folder/Inbox',
+    redirectTo: 'calendar',
     pathMatch: 'full'
-  },
-  {
-    path: 'folder/:id',
-    loadChildren: () => import('./folder/folder.module').then( m => m.FolderPageModule)
   },
   {
     path: 'calendar',
@@ -21,7 +17,7 @@ const routes: Routes = [
   },
   {
     path: 'events',
-    loadChildren: () => import('./presentation/events/events.module').then( m => m.EventsPageModule)
+    loadChildren: () => import('./presentation/event/events/events.module').then( m => m.EventsPageModule)
   },
   {
     path: 'payments',
@@ -29,7 +25,19 @@ const routes: Routes = [
   },
   {
     path: 'event-broadcast',
-    loadChildren: () => import('./presentation/event-broadcast/event-broadcast.module').then( m => m.EventBroadcastPageModule)
+    loadChildren: () => import('./presentation/event/event-broadcast/event-broadcast.module').then( m => m.EventBroadcastPageModule)
+  },
+  {
+    path: 'event-detail/:id',
+    loadChildren: () => import('./presentation/event/event-detail/event-detail.module').then( m => m.EventDetailPageModule)
+  },
+  {
+    path: 'event/create',
+    loadChildren: () => import('./presentation/event/event-form/event-form.module').then( m => m.EventFormPageModule)
+  },
+  {
+    path: 'event/edit/:id',
+    loadChildren: () => import('./presentation/event/event-form/event-form.module').then( m => m.EventFormPageModule)
   }
 ];
 

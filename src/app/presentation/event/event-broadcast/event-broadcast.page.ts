@@ -10,7 +10,7 @@ import { LocalStorageService } from 'src/app/services/general/local-storage/loca
 })
 export class EventBroadcastPage implements OnInit {
 
-  @ViewChild('eventBroadcastModal') eventModal!: IonModal;
+  @ViewChild('eventBroadcastModal') eventBroadcastModal!: IonModal;
 
   tableStyle = 'material';
   data:any = [];
@@ -38,13 +38,7 @@ export class EventBroadcastPage implements OnInit {
   ) { }
 
   async ngOnInit() {
-    const loading = await this.loadingCtrl.create({
-      message: 'loading...',
-      duration: 1000,
-    });
-    loading.present();
-
-    // this.loadEvents();
+    this.loadEvents();
   }
 
   loadImageFromDevice(event: any): void {
@@ -71,40 +65,15 @@ export class EventBroadcastPage implements OnInit {
 		console.log(row);
 	}
 
-  //THIS CODE IS DUPLICATED AND NEEDS TO BE EXTRACTED TO A SERVICE
-
   public async loadEvents() {
-    let events = this.fetchAll(this.userId);
-
-    await this.localStoage.get(`${this.localStoage.STORAGE_KEY_EVENTS}-${this.userId}-loaded`).then((data) => {
-        this.loaded = data;
+    const loading = await this.loadingCtrl.create({
+      message: 'loading...',
+      duration: 1000,
     });
+    loading.present();
 
-    console.log("they say its loaded", this.loaded);
+    this.fetchAll(this.userId);
 
-    if(this.loaded) {
-        await this.localStoage.get(`${this.localStoage.STORAGE_KEY_EVENTS}-${this.userId}`).then((data) => {
-           console.log("dat6a",data.length);
-           this.data = data;
-        });
-
-        if(this.data.length < events.length) {
-            console.log("event source not in sync with events from api");
-            this.data = events;
-            await this.localStoage.set(`${this.localStoage.STORAGE_KEY_EVENTS}-${this.userId}`, events).then(() => {
-                this.loaded = true;
-            });
-        }
-
-    } else {
-        await this.localStoage.set(`${this.localStoage.STORAGE_KEY_EVENTS}-${this.userId}`, events).then(() => {
-            this.loaded = true;
-        });
-
-        await this.localStoage.set(`${this.localStoage.STORAGE_KEY_EVENTS}-${this.userId}-loaded`, true);
-
-        this.data = events;
-    }
     return;
   }
 
@@ -158,7 +127,7 @@ export class EventBroadcastPage implements OnInit {
 
     this.saveEvent(event, this.userId);
 
-    this.eventModal.dismiss();
+    this.eventBroadcastModal.dismiss();
 
     console.log("event to add", event);
 }

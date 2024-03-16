@@ -4,7 +4,7 @@ import { CalendarComponent, CalendarMode, Step } from 'ionic7-calendar';
 import { LocalStorageService } from 'src/app/services/general/local-storage/local-storage.service';
 import { IEvent, QueryMode } from 'ionic7-calendar/calendar.interface';
 import { EventService } from 'src/app/services/event/event.service';
-// import { format } from 'date-fns';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -15,7 +15,6 @@ import { EventService } from 'src/app/services/event/event.service';
 export class CalendarPage implements OnInit {
     
     @ViewChild(CalendarComponent) myCal!:CalendarComponent;
-    @ViewChild('modal') modal!: IonModal;
 
     calendar = {
         mode: "month" as CalendarMode,
@@ -26,9 +25,11 @@ export class CalendarPage implements OnInit {
     newEvent: any = {
         title: '',
         allDay: false,
-        startTime: new Date(),
-        endTime: null
+        startTime: new Date().toISOString(),
+        endTime: new Date().toISOString()
     };
+
+    eventData: Array<any> = [];
 
     viewTitle: string = '';
     eventSource: any[] = [];
@@ -45,166 +46,87 @@ export class CalendarPage implements OnInit {
     constructor(
         private localStoage: LocalStorageService,
         private eventService: EventService,
-        private loadingCtrl: LoadingController
+        private loadingCtrl: LoadingController,
+        private router: Router,
     ) {}
-
-    async ngOnInit() {
-        const loading = await this.loadingCtrl.create({
-            message: 'loading...',
-            duration: 1000,
-        });
-        loading.present();
-        console.log("ngOnInit");
-        await this.loadEvents();
-        console.log("ngOnInit after api loading of events, setting to local memory");
-    }
-
-    ionViewWillEnter(){
-    }
-
-    ionViewDidEnter(){
-        if(this.myCal) {
-            this.myCal.loadEvents();
-            this.myCal.update();
-        }
-        console.log("ionViewDidEnter")
-    }
-
-    async loadEvents() {
-            let events = this.fetchAll(this.userId);
-
-            await this.localStoage.get(`${this.localStoage.STORAGE_KEY_EVENTS}-${this.userId}-loaded`).then((data) => {
-                this.loaded = data;
-            });
-
-            console.log("they say its loaded", this.loaded);
-
-
-            if(this.loaded) {
-                await this.localStoage.get(`${this.localStoage.STORAGE_KEY_EVENTS}-${this.userId}`).then((data) => {
-                   console.log("dat6a",data.length);
-                   this.eventSource = data;
-                });
-
-                if(this.eventSource.length < events.length) {
-                    console.log("event source not in sync with events from api");
-                    this.eventSource = events;
-                    await this.localStoage.set(`${this.localStoage.STORAGE_KEY_EVENTS}-${this.userId}`, events).then(() => {
-                        this.loaded = true;
-                    });
-                }
-
-            } else {
-                await this.localStoage.set(`${this.localStoage.STORAGE_KEY_EVENTS}-${this.userId}`, events).then(() => {
-                    this.loaded = true;
-                });
-
-                await this.localStoage.set(`${this.localStoage.STORAGE_KEY_EVENTS}-${this.userId}-loaded`, true);
     
-                this.eventSource = events;
-            }
-        return;
+    ngOnInit() {
+        //lets see what we can place here.
+    }
+    
+    public async loadEvents() {
+        await this.fetchAll(this.userId);
     }
 
-    async scheduleEvent() {
-        const event: any = {
-            title: this.newEvent.title,
-            allDay: this.newEvent.allDay,
-            startTime: new Date(this.newEvent.startTime),
-            endTime: new Date(this.newEvent.endTime),
-        }
-
-        console.log("wrtf", this.newEvent.startTime);
-
-        this.newEvent = {
-            title: '',
-            allDay: false,
-            startTime: new Date(),
-            endTime: null
-        };
-
-        console.log(this.eventSource);
-        
-        if (!this.eventSource) {
-            this.eventSource = [];
-        }
-
-        this.eventSource.push(event);
-
-        await this.localStoage.set(`${this.localStoage.STORAGE_KEY_EVENTS}-${this.userId}`, this.eventSource);
-
-        this.saveEvent(event, this.userId);
-
+    public async onRangeChanged(ev: any) {
+        await this.loadEvents();
         this.myCal.loadEvents();
-        this.modal.dismiss();
-
-        console.log("event to add", event);
-   }
-
-
-    onRangeChanged(ev: any) {
-        this.loadEvents();
-        // this.myCal.loadEvents();
-        console.log('range changed: startTime: ' + ev.startTime + ', endTime: ' + ev.endTime);
-        console.log("event source", this.eventSource);
+        this.myCal.update();
     }
 
-   today() {
+    public today() {
         this.myCal.currentDate= new Date();
-   }
+    }
 
-   next() {
+    public next() {
         this.myCal.slideNext();
-   }
+    }
 
-   back() {
+    public back() {
         this.myCal.slidePrev();
-   }
+    }
 
-   onTimeSelected(ev: {selectedTime: Date; events: any[]}) {
+    public onTimeSelected(ev: {selectedTime: Date; events: any[]}) {
         const selected = new Date(ev.selectedTime);
         
         this.newEvent.startTime = selected.toISOString();
         selected.setHours(selected.getHours() + 1);
         this.newEvent.endTime = selected.toISOString();
-
-        if (this.calendar.mode == "day" || this.calendar.mode == "week" && ev.events.length === 0) {
-            this.modal.present();
+        if (this.calendar.mode == "day"  && ev.events.length === 0 || this.calendar.mode == "week" && ev.events.length === 0) {
+            this.router.navigateByUrl(`/event-form`);
+            return;
         }
         console.log('Selected time: ' + ev.selectedTime + ', hasEvents: ' + (ev.events !== undefined && ev.events.length !== 0));
     }
 
-    onEventSelected(ev: any) {
-        console.log('Event selected:' + ev.startTime + '-' + ev.endTime + ',' + ev.title);
+    public onEventSelected(ev: any) {
+        console.log("ev", ev);
+        this.router.navigateByUrl(`/event-detail/${ev.id}`);
     }
 
-    startChanged(value: any) {
+    public startChanged(value: any) {
         this.newEvent.startTime = value;
     }
 
-    endChanged(value: any) {
+    public endChanged(value: any) {
         this.newEvent.endTime = value;
     }
 
-    private saveEvent(event: any, userId: string) {
-        this.eventService.create({
-            name: event.title,
-            description: "There are no notes added to this feature yet",
-            start_date: new Date(event.startTime).toISOString().slice(0, 19).replace('T', ' '),
-            end_date: new Date(event.endTime).toISOString().slice(0, 19).replace('T', ' '),
-            all_day: event.allDay,
-            user_id: userId,
-        }).subscribe((data) => {
-            console.log(data);
+    private async fetchAll(userId: string) {
+        let loading = await this.loadingCtrl.create({
+            message: 'loading...',
         });
-    }
+        loading.present();
 
-    private fetchAll(userId: string) {
-        let events = this.eventService.getAll(userId);
-
-        console.log("events in controller", events);
-
-        return events;
+        await this.eventService.getAll(userId).then((data) => {
+        if(data.length != this.eventSource.length) {
+            for(let i = 0; i < data.length; i++) {
+                this.eventSource.push(
+                    {
+                        id: data[i].id,
+                        title: data[i].name,
+                        allDay: false,
+                        createdAt: new Date(data[i].created_at),
+                        startTime: new Date(data[i].start_date),
+                        endTime: new Date(data[i].end_date),
+                        description: data[i].description,
+                        userId: userId  
+                    }
+                );
+              }
+            }
+        });
+        loading.dismiss();
     }
 }
 

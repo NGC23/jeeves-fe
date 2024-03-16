@@ -13,35 +13,40 @@ export class AppComponent {
       icon: 'calendar' 
     },
     { 
-      title: 'Payments',
-      url: '/payments', 
-      icon: 'cash' 
+      title: 'Event Broadcast',
+      url: '/event-broadcast', 
+      icon: 'send' 
     },
     { 
       title: 'Events',
       url: '/events', 
       icon: 'calendar' 
     },
-    { 
-      title: 'Event Broadcast',
-      url: '/event-broadcast', 
-      icon: 'send' 
-    },
-    { 
-      title: 'Contacts',
-      url: '/contacts', 
-      icon: 'person' 
-    },
-    { 
-      title: 'Templates',
-      url: '/templates', 
-      icon: 'document' 
-    },
-    { 
-      title: 'Settings',
-      url: '/settings', 
-      icon: 'settings' 
-    },
+    // { 
+    //   title: 'Contacts',
+    //   url: '/contacts', 
+    //   icon: 'person' 
+    // },
+    // { 
+    //   title: 'Templates',
+    //   url: '/templates', 
+    //   icon: 'document' 
+    // },
+    // { 
+    //   title: 'Integrations Manager',
+    //   url: '/integrations', 
+    //   icon: 'settings' 
+    // },
+    // { 
+    //   title: 'Payments',
+    //   url: '/payments', 
+    //   icon: 'cash' 
+    // },
+    // { 
+    //   title: 'Settings',
+    //   url: '/settings', 
+    //   icon: 'settings' 
+    // },
     { 
       title: 'Logout',
       url: '/logout', 

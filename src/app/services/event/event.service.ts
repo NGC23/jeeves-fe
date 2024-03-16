@@ -11,38 +11,42 @@ export class EventService {
 
   constructor(private httpClient: HttpClient) { }
 
-  public getAll(userId: string): Array<any> {
-    let events: any[] = [];
-    this.httpClient.get(`${this.BASE_URL}/${userId}`).subscribe((data: any) => {
-      for(let i = 0; i < data.length; i++) {
-          events.push(
-              {
-                  id: data[i].id,
-                  title: data[i].name,
-                  allDay: false,
-                  startTime: new Date(data[i].start_date),
-                  endTime: new Date(data[i].end_date),
-                  description: data[i].description,
-                  userId: userId  
-              }
-          );
-      }
-    });
-
-    console.log("events in service", events);
-    return events;
+  public async getAll(userId: string): Promise<any> 
+  {
+    return this.httpClient.get(`${this.BASE_URL}/${userId}`).toPromise();
   }
 
-  public create(event: any): Observable<any> {
+  public async getById(id: string): Promise<any> 
+  {
+    return this.httpClient.get(`${this.BASE_URL}/details/${id}`).toPromise();
+  }
+
+  public create(event: any): Observable<any> 
+  {
     return this.httpClient.post(`${this.BASE_URL}/create`, {
       name: event.name,
       description: event.description,
+      created_at: event.created_at,
       start_date: event.start_date,
       end_date: event.end_date,
       user_id: event.user_id,
-    })
-      .pipe(
-        catchError((err) => { throw(err) })
-      )
+    });
+  }
+
+  public update(event: any): Observable<any>
+  {
+    return this.httpClient.put(`${this.BASE_URL}/update`, {
+      name: event.name,
+      description: event.description,
+      created_at: event.created_at,
+      start_date: event.start_date,
+      end_date: event.end_date,
+      user_id: event.user_id,
+    });
+  }
+
+  public delete(id: string): Observable<any> 
+  {
+    return this.httpClient.delete(`${this.BASE_URL}/delete/${id}`);
   }
 }

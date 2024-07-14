@@ -7,7 +7,7 @@ import { Observable, catchError, of, tap } from 'rxjs';
 })
 export class EventService {
 
-  private BASE_URL: string = 'http://127.0.0.1:8081/events';
+  private BASE_URL: string = 'http://127.0.0.1:8080/events';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -16,9 +16,9 @@ export class EventService {
     return this.httpClient.get(`${this.BASE_URL}/${userId}`).toPromise();
   }
 
-  public async getById(id: string): Promise<any> 
+  public async getById(id: string, userId: string): Promise<any> 
   {
-    return this.httpClient.get(`${this.BASE_URL}/details/${id}`).toPromise();
+    return this.httpClient.get(`${this.BASE_URL}/details/${userId}/${id}`).toPromise();
   }
 
   public create(event: any): Observable<any> 
@@ -26,8 +26,6 @@ export class EventService {
     return this.httpClient.post(`${this.BASE_URL}/create`, {
       name: event.name,
       description: event.description,
-      created_at: event.created_at,
-      start_date: event.start_date,
       end_date: event.end_date,
       user_id: event.user_id,
     });
@@ -36,17 +34,16 @@ export class EventService {
   public update(event: any): Observable<any>
   {
     return this.httpClient.put(`${this.BASE_URL}/update`, {
+      id: event.id,
       name: event.name,
       description: event.description,
-      created_at: event.created_at,
-      start_date: event.start_date,
       end_date: event.end_date,
       user_id: event.user_id,
     });
   }
 
-  public delete(id: string): Observable<any> 
+  public delete(id: string, userId: string): Observable<any> 
   {
-    return this.httpClient.delete(`${this.BASE_URL}/delete/${id}`);
+    return this.httpClient.delete(`${this.BASE_URL}/delete/${userId}/${id}`);
   }
 }

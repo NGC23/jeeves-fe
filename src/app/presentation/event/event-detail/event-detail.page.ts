@@ -12,6 +12,7 @@ import { LocalStorageService } from 'src/app/services/general/local-storage/loca
 export class EventDetailPage implements OnInit {
 
   id: string = '';
+  userId: string = '1';
   event: any = {};
 
   constructor(  
@@ -19,7 +20,8 @@ export class EventDetailPage implements OnInit {
     private router: Router,
     private localStoage: LocalStorageService,
     private eventService: EventService,
-    private loadingCtrl: LoadingController) { }
+    private loadingCtrl: LoadingController
+  ) { }
 
   async ngOnInit() {
     const loading = await this.loadingCtrl.create({
@@ -37,23 +39,24 @@ export class EventDetailPage implements OnInit {
     this.fetchEvent(this.id);
   }
 
-  public delete(id: string) {
+  public delete(id: string, userId: string) {
     console.log("delete triggered somehow");
-    this.eventService.delete(id).subscribe((data:any) => {
+    this.eventService.delete(id, userId).subscribe((data:any) => {
       this.router.navigate(["/events"]);
     });
   }
 
   private fetchEvent(id: string) {
-    this.eventService.getById(id).then((data: any) => {
+    this.eventService.getById(id, this.userId).then((data: any) => {
+      console.log("booking event",data);
       this.event = {
         id: data.id,
         title: data.name,
         allDay: false,
-        startTime: new Date(data.start_date),
-        endTime: new Date(data.end_date),
+        startTime: new Date(data.startTime),
+        endTime: new Date(data.endTime),
         description: data.description,
-        userId: data.user_id  
+        userId: data.userId  
       };
     });
   }

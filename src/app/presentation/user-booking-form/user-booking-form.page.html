@@ -1,0 +1,59 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>{{this.pageTitle}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-row>
+    <ion-col sizeXl="8" sizeLg="8" sizeMd="12" sizeSm="12" sizeXs="12">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <ion-item>
+          <ion-label position="floating" color="primary">Name</ion-label>
+          <ion-input type="text" formControlName="name"></ion-input>
+        </ion-item>
+    
+        <ion-item>
+          <ion-label position="floating" color="primary">Surname</ion-label>
+          <ion-input type="text" formControlName="surname"></ion-input>
+        </ion-item>
+    
+        <ion-item>
+          <ion-label position="floating" color="primary">Email</ion-label>
+          <ion-input type="email" formControlName="email"></ion-input>
+        </ion-item>
+    
+        <ion-item>
+          <ion-label position="floating" color="primary">Cell Num:</ion-label>
+          <ion-input type="text" formControlName="cellNumber"></ion-input>
+        </ion-item>
+    
+        <ion-button type="submit" fill="outline" expand="block">{{this.buttonTitle}}</ion-button>
+    </form>
+    </ion-col>
+    <ion-col sizeXl="4" sizeLg="4" sizeMd="12" sizeSm="12" sizeXs="12">
+      <ion-card>
+        <ion-card-header>
+          <h4>Booking details:</h4>
+        </ion-card-header>
+        <ion-card-content>
+          <div>
+            <label>Name:</label><b>{{this.event.title}}</b>
+          </div>
+          <div>
+            <label>Description:</label><b>{{this.event.description}}</b>
+          </div>
+          <div>
+            <label>Price:</label><b>NA</b>
+          </div>
+          <div>
+            <label>Start Time:</label><b>{{this.start}}</b>
+          </div>
+          <div>
+            <label>End Time:</label><b>{{this.end}}</b>
+          </div>
+        </ion-card-content>
+      </ion-card>     
+    </ion-col>
+    </ion-row>
+</ion-content>

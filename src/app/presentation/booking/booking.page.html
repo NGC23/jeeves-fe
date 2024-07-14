@@ -1,0 +1,37 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>booking</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-row>
+    <ion-col size="12">
+      <ngx-datatable
+        [rows]="data"
+        [ngClass]="tableStyle"
+        [rowHeight]="'auto'"
+        [headerHeight]="50"
+        [footerHeight]="50"
+        [columnMode]="'force'"
+        [limit]="10"
+      >
+        <ngx-datatable-column name="Event Name" prop="eventId"></ngx-datatable-column>
+        <ngx-datatable-column name="Booker Name" prop="bookerDetails.firstName"></ngx-datatable-column>
+        <ngx-datatable-column name="Start Time"></ngx-datatable-column>
+        <ngx-datatable-column name="End Time"></ngx-datatable-column>
+        <ngx-datatable-column name="Created At" prop="bookerDetails.createdAt"></ngx-datatable-column>
+        <ngx-datatable-column name="Actions" [sortable]="true">
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            <ion-button size="small" fill="outline" (click)="open(row)"
+              >Manage</ion-button
+            >
+          </ng-template>
+        </ngx-datatable-column>
+	    </ngx-datatable>
+    </ion-col>
+  </ion-row>
+</ion-content>

@@ -17,9 +17,14 @@ export class LocalStorageService {
     if(this._storage != null) {
       return;
     }
-    // await this.storage.defineDriver(CordovaSQLiteDriver);
     const storage = await this.storage.create();
     this._storage = storage;
+  }
+
+  public async keys(): Promise<any>
+  {
+    await this.init();
+    return await this._storage?.keys();
   }
 
   public async set(key: string, value: any): Promise<any> {

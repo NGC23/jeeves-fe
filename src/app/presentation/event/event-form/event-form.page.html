@@ -15,36 +15,11 @@
       <ion-label position="floating" color="primary">Name</ion-label>
       <ion-input type="text" formControlName="name"></ion-input>
     </ion-item>
+
     <ion-item>
       <ion-label position="floating" color="primary">Description</ion-label>
       <ion-textarea formControlName="description"></ion-textarea>
     </ion-item>
-
-    <ion-item (click)="showStart = !showStart">
-      <ion-label>Starts</ion-label>
-     <ion-text slot="end">{{this.startTime | date:'medium'}}</ion-text>
-    </ion-item>
-
-    <ion-datetime 
-      #start 
-      *ngIf="showStart" 
-      formControlName="startDate"
-      [presentation]="this.allDay ? 'date' : 'time-date'"
-      (ionChange)="startChanged(start.value)"
-    ></ion-datetime>
-
-    <ion-item (click)="showEnd = !showEnd">
-      <ion-label>Ends</ion-label>
-     <ion-text slot="end">{{this.endTime | date:'medium'}}</ion-text>
-    </ion-item>
-
-    <ion-datetime 
-      #end 
-      *ngIf="showEnd" 
-      formControlName="endDate"
-      [presentation]="this.allDay ? 'date' : 'time-date'"
-      (ionChange)="endChanged(end.value)"
-    ></ion-datetime>
 
     <ion-button type="submit" fill="outline" expand="block">{{this.buttonTitle}}</ion-button>
 

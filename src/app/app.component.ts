@@ -8,19 +8,24 @@ export class AppComponent {
   
   public appPages = [
     { 
+      title: 'Bookings',
+      url: '/bookings', 
+      icon: 'create' 
+    },
+    { 
       title: 'Calendar',
       url: '/calendar', 
       icon: 'calendar' 
     },
     { 
-      title: 'Event Broadcast',
-      url: '/event-broadcast', 
+      title: 'Events',
+      url: '/events', 
       icon: 'send' 
     },
     { 
-      title: 'Events',
-      url: '/events', 
-      icon: 'calendar' 
+      title: 'Event Broadcast',
+      url: '/event-broadcast', 
+      icon: 'rocket' 
     },
     // { 
     //   title: 'Contacts',

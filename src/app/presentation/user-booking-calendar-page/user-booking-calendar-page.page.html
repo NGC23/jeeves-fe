@@ -17,11 +17,11 @@
     <ion-segment-button value="day">Day</ion-segment-button>
   </ion-segment>
   <ion-row  class="ion-justify-content-center">
-    <ion-col expand="block" size="3">
+    <ion-col class="ion-text-center" expand="block" size="4">
       <ion-button fill="clear" (click)="back()"><ion-icon name="arrow-back" slot="icon-only"></ion-icon></ion-button>
     </ion-col>
-    <ion-col size="6"><ion-title>{{viewTitle}}</ion-title></ion-col>
-    <ion-col expand="block" size="3">
+    <ion-col size="4" class="ion-text-center"><ion-title>{{viewTitle}}</ion-title></ion-col>
+    <ion-col expand="block" size="4" class="ion-text-center">
       <ion-button fill="clear" (click)="next()"  class="item-right"><ion-icon name="arrow-forward" slot="icon-only"></ion-icon></ion-button>
     </ion-col>
   </ion-row>
@@ -40,19 +40,18 @@
   (onTitleChanged) = "viewTitle = $event"
   [startingDayWeek]="1"
   [startHour]="6"
-  [endHour]="24"
+  [endHour]="22"
   (onTimeSelected)="onTimeSelected($event)"
   (onEventSelected)="onEventSelected($event)"
   [queryMode]="calendar.queryMode"
-  [timeInterval]="30"
   >
   </calendar>
 
-  <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+  <!-- <ion-fab vertical="bottom" horizontal="center" slot="fixed">
     <ion-fab-button href="/event/create">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
-  </ion-fab>
+  </ion-fab> -->
 </ion-content>
 
 

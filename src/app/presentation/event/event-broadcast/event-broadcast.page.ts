@@ -15,7 +15,7 @@ export class EventBroadcastPage implements OnInit {
   tableStyle = 'material';
   data:any = [];
   loaded:boolean = false;
-  userId: string = 'user_id_placeholder';
+  userId: string = '1';
   showStart:boolean = false;
   showEnd:boolean = false;
   newEventBroadcast:any = {

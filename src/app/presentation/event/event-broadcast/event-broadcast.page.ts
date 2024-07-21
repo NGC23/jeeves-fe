@@ -24,8 +24,8 @@ export class EventBroadcastPage implements OnInit {
     upload: '',
     broadcast: [],
     allDay: false,
-    startTime: new Date().toISOString(),
-    endTime: new Date().toISOString(),
+    startTime: new Date().toUTCString(),
+    endTime: new Date().toUTCString(),
     type: ''
   };
 
@@ -111,8 +111,8 @@ export class EventBroadcastPage implements OnInit {
       upload: '',
       broadcast: ['email','instagram','whatsapp'],
       allDay: false,
-      startTime: new Date().toISOString(),
-      endTime: new Date().toISOString()
+      startTime: new Date().toUTCString(),
+      endTime: new Date().toUTCString()
     };
 
     console.log(this.data);
@@ -136,8 +136,8 @@ private saveEvent(event: any, userId: string) {
   this.eventService.create({
       name: event.title,
       description: "There are no notes added to this feature yet",
-      start_date: new Date(event.startTime).toISOString().slice(0, 19).replace('T', ' '),
-      end_date: new Date(event.endTime).toISOString().slice(0, 19).replace('T', ' '),
+      start_date: new Date(event.startTime).toUTCString().slice(0, 19).replace('T', ' '),
+      end_date: new Date(event.endTime).toUTCString().slice(0, 19).replace('T', ' '),
       all_day: event.allDay,
       user_id: userId,
   }).subscribe((data) => {

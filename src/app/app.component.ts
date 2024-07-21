@@ -22,11 +22,11 @@ export class AppComponent {
       url: '/events', 
       icon: 'send' 
     },
-    { 
-      title: 'Event Broadcast',
-      url: '/event-broadcast', 
-      icon: 'rocket' 
-    },
+    // { 
+    //   title: 'Event Broadcast',
+    //   url: '/event-broadcast', 
+    //   icon: 'rocket' 
+    // },
     // { 
     //   title: 'Contacts',
     //   url: '/contacts', 

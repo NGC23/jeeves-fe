@@ -5,6 +5,8 @@ import { CalendarComponent, CalendarMode, QueryMode } from 'ionic7-calendar';
 import { BookingService } from 'src/app/services/booking/booking.service';
 import { EventService } from 'src/app/services/event/event.service';
 import { LocalStorageService } from 'src/app/services/general/local-storage/local-storage.service';
+import * as moment from 'moment';
+
 
 @Component({
   selector: 'app-user-booking-calendar-page',
@@ -17,6 +19,7 @@ export class UserBookingCalendarPagePage implements OnInit {
 
   userId: string = '';
   id: string = '';
+  momentjs: any = moment;
 
   calendar = {
       mode: "week" as CalendarMode,
@@ -27,8 +30,8 @@ export class UserBookingCalendarPagePage implements OnInit {
   newEvent: any = {
       title: '',
       allDay: false,
-      startTime: new Date().toISOString(),
-      endTime: new Date().toISOString()
+      startTime: new Date().toUTCString(),
+      endTime: new Date().toUTCString()
   };
 
   eventData: Array<any> = [];
@@ -94,11 +97,11 @@ export class UserBookingCalendarPagePage implements OnInit {
 
   public onTimeSelected(ev: {selectedTime: Date; events: any[]}) 
   {
-      const selected = new Date(ev.selectedTime);
+      const start = this.momentjs(ev.selectedTime).format("YYYY-MM-DD HH:mm:ss");
+      const end = this.momentjs(ev.selectedTime.setHours(ev.selectedTime.getHours() + 1)).format("YYYY-MM-DD HH:mm:ss");
       
-      this.newEvent.startTime = selected.toISOString();
-      selected.setHours(selected.getHours() + 1);
-      this.newEvent.endTime = selected.toISOString();
+      this.newEvent.startTime = start;
+      this.newEvent.endTime = end;
       if (this.calendar.mode == "day"  && ev.events.length === 0 || this.calendar.mode == "week" && ev.events.length === 0) {
           this.router.navigateByUrl(`/booking/create/${this.id}/${this.userId}?start=${this.newEvent.startTime}&end=${this.newEvent.endTime}`);
           return;

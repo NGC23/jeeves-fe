@@ -1,13 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { SERVER_URL } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
 
-  private BASE_URL: string = 'http://127.0.0.1:8080/user';
+  private BASE_URL: string = `${SERVER_URL}/user`;
 
   constructor(private httpClient: HttpClient) 
   { }

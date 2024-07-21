@@ -1,0 +1,43 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="post-background">
+    <ion-img src="https://ionicframework.com/docs/img/demos/card-media.png" alt='test' class="ion-align-self-end"></ion-img>
+    <h2>Booking details: {{this.booking.eventName}} - {{this.booking.bookerDetails.firstName}} {{this.booking.bookerDetails.lastName}}</h2>
+  </div>
+  <ion-row>
+    <ion-col sizeXl="6" sizeLg="6" sizeMd="12" sizeSm="12" sizeXs="12">
+      <ion-card>
+        <ion-card-header>
+          Booker Details
+        </ion-card-header>
+        <ion-card-content>
+          <label>First Name:</label> {{this.booking.bookerDetails.firstName}}<br>
+          <label>Last Name:</label> {{this.booking.bookerDetails.lastName}}<br>
+          <label>Email:</label> {{this.booking.bookerDetails.email}}<br>
+          <label>Cell Number:</label> {{this.booking.bookerDetails.cellNumber}}<br>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>    
+    <ion-col sizeXl="6" sizeLg="6" sizeMd="12" sizeSm="12" sizeXs="12">
+      <ion-card>
+        <ion-card-header>
+          Booking Details
+        </ion-card-header>
+        <ion-card-content>
+          <label>Booking Start Time:</label> {{this.booking.startTime}}<br>
+          <label>Booking End Time:</label> {{this.booking.endTime}}<br>
+          <label>Booking Name:</label> {{this.booking.eventId}}<br>
+          <label>Created At:</label> {{this.booking.bookerDetails.createdAt}}
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+</ion-content>

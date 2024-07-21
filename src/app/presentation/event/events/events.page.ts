@@ -23,8 +23,8 @@ export class EventsPage implements OnInit {
   newEvent:any = {
     title: '',
     allDay: false,
-    startTime: new Date().toISOString(),
-    endTime: new Date().toISOString()
+    startTime: new Date().toUTCString(),
+    endTime: new Date().toUTCString()
   };
   constructor(
     private router: Router,

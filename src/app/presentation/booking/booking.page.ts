@@ -88,7 +88,7 @@ export class BookingPage implements OnInit {
   }
   
   public async open(row: any) {
-		this.router.navigateByUrl(`/booking-detail/${row.id}`);
+		this.router.navigateByUrl(`/booking/view/${row.id}`);
 	}
 
 }

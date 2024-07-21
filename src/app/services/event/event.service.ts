@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, of, tap } from 'rxjs';
+import { SERVER_URL } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EventService {
 
-  private BASE_URL: string = 'http://127.0.0.1:8080/events';
+  private BASE_URL: string = `${SERVER_URL}/events`;
 
   constructor(private httpClient: HttpClient) { }
 

@@ -68,6 +68,14 @@ const routes: Routes = [
   {
     path: 'thank-you',
     loadChildren: () => import('./presentation/thank-you/thank-you.module').then( m => m.ThankYouPageModule)
+  },
+  {
+    path: 'booking/view/:id',
+    loadChildren: () => import('./presentation/booking-detail/booking-detail.module').then( m => m.BookingDetailPageModule)
+  },
+  {
+    path: 'booking/details/:id',
+    loadChildren: () => import('./presentation/user-booking-detail/user-booking-detail.module').then( m => m.UserBookingDetailPageModule)
   }
 ];
 

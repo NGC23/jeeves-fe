@@ -54,8 +54,8 @@ export class CalendarPage implements OnInit {
     newEvent: any = {
         title: '',
         allDay: false,
-        startTime: new Date().toISOString(),
-        endTime: new Date().toISOString()
+        startTime: new Date().toUTCString(),
+        endTime: new Date().toUTCString()
     };
 
     eventData: Array<any> = [];
@@ -123,9 +123,9 @@ export class CalendarPage implements OnInit {
     {
         const selected = new Date(ev.selectedTime);
         
-        this.newEvent.startTime = selected.toISOString();
+        this.newEvent.startTime = selected.toUTCString();
         selected.setHours(selected.getHours() + 1);
-        this.newEvent.endTime = selected.toISOString();
+        this.newEvent.endTime = selected.toUTCString();
         if (this.calendar.mode == "day"  && ev.events.length === 0 || this.calendar.mode == "week" && ev.events.length === 0) {
             this.router.navigateByUrl(`/event/create`);
             return;
@@ -136,7 +136,7 @@ export class CalendarPage implements OnInit {
     public onEventSelected(ev: any) 
     {
         console.log("ev", ev);
-        this.router.navigateByUrl(`/event-detail/${ev.id}`);
+        this.router.navigateByUrl(`/booking/view/${ev.id}`);
     }
 
     public startChanged(value: any) 
@@ -163,7 +163,7 @@ export class CalendarPage implements OnInit {
                     this.eventSource.push(
                         {
                             id: data[i].id,
-                            title: `${data[i].eventId} - ${data[i].bookerDetails.firstName} ${data[i].bookerDetails.firstName} `,
+                            title: `${data[i].eventName} - ${data[i].bookerDetails.firstName} ${data[i].bookerDetails.lastName} `,
                             allDay: false,
                             createdAt: new Date(data[i].createdAt),
                             startTime: new Date(data[i].startTime),

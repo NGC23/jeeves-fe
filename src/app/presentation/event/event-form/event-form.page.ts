@@ -22,8 +22,8 @@ export class EventFormPage implements OnInit {
   showStart:boolean = false;
   showEnd:boolean = false;
   allDay:boolean = false;
-  startTime: string = new Date().toISOString();
-  endTime: string = new Date().toISOString();
+  startTime: string = new Date().toUTCString();
+  endTime: string = new Date().toUTCString();
   
   userId: string = '1'; //testing
   defaultHref: string = '';

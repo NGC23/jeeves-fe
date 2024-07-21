@@ -1,13 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { SERVER_URL } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BookingService {
 
-  private BASE_URL: string = 'http://127.0.0.1:8080/bookings';
+  private BASE_URL: string = `${SERVER_URL}//bookings`;
 
   constructor(private httpClient: HttpClient) { }
 
@@ -30,6 +31,11 @@ export class BookingService {
   public async getAllBookings(userId: string): Promise<any> 
   {
     return this.httpClient.get(`${this.BASE_URL}/${userId}`).toPromise();
+  }
+
+  public async getById(bookingId: string): Promise<any> 
+  {
+    return this.httpClient.get(`${this.BASE_URL}/details/${bookingId}`).toPromise();
   }
 
   public async getAllBookingsForEventAndUserId(

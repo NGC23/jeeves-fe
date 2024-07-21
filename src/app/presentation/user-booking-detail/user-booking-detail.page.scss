@@ -1,4 +1,10 @@
-.post-background {
+ion-img {
+    border-radius: 15px;
+    object-fit: cover;
+    margin-top: calc(-1 * var(--ion-safe-area-top));
+  }
+  
+  .post-background {
     position: relative;
     display: flex;
     padding-top: var(--ion-safe-area-top);

@@ -1,7 +1,7 @@
 import { LocalStorageService } from 'src/app/services/general/local-storage/local-storage.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LoadingController, MenuController, ToastController } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 
@@ -14,17 +14,20 @@ export class LoginPage implements OnInit {
   
   //we will do types in future
   user: any;
+  returnUrl: string = '';
 
   form!: FormGroup;
   loading!: HTMLIonLoadingElement;
   
   buttonTitle: string = "Login";
-  buttonRegisterTitle: string = "Register";
+  buttonRegisterTitle: string = "Register me as a booker";
+  buttonRegisterUserTitle: string = "Register me as a user that will manage bookings and create events";
   pageTitle: string = "Login";
 
   constructor(
     private menu: MenuController,
     private router: Router,
+    private route: ActivatedRoute,
 		private toastController: ToastController,
     public loadingCtrl: LoadingController,
     public localStorageService: LocalStorageService,
@@ -33,6 +36,9 @@ export class LoginPage implements OnInit {
 
   async ngOnInit() 
   {
+    this.returnUrl = this.route.snapshot.queryParamMap.get("returnUrl") ?? '';
+
+    console.log("url",this.returnUrl);
     //Disable menu
     this.menu.enable(false);
     //Create form
@@ -66,13 +72,28 @@ export class LoginPage implements OnInit {
       },
       complete: async () => {
         if (this.user.loggedIn === true) {
-          console.info('login time');
           await this.localStorageService.set(
             "user",
             { user: this.user, loggedIn: true, test :'tessst' }
           );
-          this.menu.enable(true);
-          this.router.navigateByUrl(`/calendar`);
+          
+          if (this.user.type === "user") {
+            this.menu.enable(true);
+            this.router.navigateByUrl(`/calendar`);
+            return;
+          }
+
+          if (this.user.type === "booker") {
+            this.menu.enable(false);
+            if(this.returnUrl !== '') {
+              this.router.navigateByUrl(`/booker/bookings?returnUrl=${this.returnUrl}`);
+              return;
+            }
+            this.router.navigateByUrl(`/booker/bookings`);
+            return;
+          }
+
+          this.router.navigateByUrl(`/not-found`);        
         }
       }
     });
@@ -82,9 +103,9 @@ export class LoginPage implements OnInit {
     this.loading.dismiss();
   }
 
-  public redirectUserToSignUpPage(): void
+  public redirectUserToSignUpPage(type: string): void
   {
-    this.router.navigateByUrl('/register');
+    this.router.navigateByUrl(`/register/${type}`);
   }
 
 }

@@ -4,6 +4,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoadingController, MenuController, ToastController } from '@ionic/angular';
 import { EventService } from 'src/app/services/event/event.service';
+import { LocalStorageService } from 'src/app/services/general/local-storage/local-storage.service';
 
 @Component({
   selector: 'app-user-booking-form',
@@ -13,8 +14,9 @@ import { EventService } from 'src/app/services/event/event.service';
 export class UserBookingFormPage implements OnInit {
 
   form!: FormGroup;
-  id!:string;
-  userId!:string;
+  id:string = '';
+  userId:string = '';
+  bookerId:string = '';
   start!:string;
   end!:string;
   event:any = {};
@@ -28,16 +30,12 @@ export class UserBookingFormPage implements OnInit {
     private loadingCtrl: LoadingController,
     private route: ActivatedRoute,
     private eventService: EventService,
-    private bookingService: BookingService
+    private bookingService: BookingService,
+    private localStorageService: LocalStorageService,
   ) { }
 
   async ngOnInit() {
     this.menu.enable(false);
-
-    this.id = this.route.snapshot.paramMap.get('id') ?? '';
-    this.userId = this.route.snapshot.paramMap.get('userId') ?? '';
-    this.start = this.route.snapshot.queryParamMap.get('start') ?? '';
-    this.end = this.route.snapshot.queryParamMap.get('end') ?? '';
 
     this.form = new FormGroup({
       name: new FormControl(''),
@@ -47,6 +45,44 @@ export class UserBookingFormPage implements OnInit {
       // startDate: new FormControl(this.startTime),
       // endDate: new FormControl(this.endTime),
     });
+
+
+    await this.localStorageService.get("user").then(async (data:any) => {
+
+      if(!data) {
+        const toast = await this.toastController.create({
+          message: "Please note you are not logged in, it will be easier to manager bookings when logged in",
+          duration: 10000,
+          icon: "warning-outline",
+          // cssClass: 'custom-toast',
+          buttons: [
+            {
+              text: 'Dismiss',
+              role: 'cancel'
+            },
+            {
+              text: 'Login',
+              handler: () => {
+                this.router.navigateByUrl(`/login`);
+              }
+            }
+          ],
+        });
+    
+        await toast.present();
+        console.warn("No user detected, this will just end up in bookings for now, lets see how we will use the information");
+        return;
+      }
+
+      if (data.user.type === 'booker') {
+       this.bookerId = data.user.id;
+      }
+    });
+
+    this.id = this.route.snapshot.paramMap.get('id') ?? '';
+    this.userId = this.route.snapshot.paramMap.get('userId') ?? '';
+    this.start = this.route.snapshot.queryParamMap.get('start') ?? '';
+    this.end = this.route.snapshot.queryParamMap.get('end') ?? '';
 
     await this.getEvent(
       this.id, 
@@ -67,7 +103,8 @@ export class UserBookingFormPage implements OnInit {
       cellNumber: this.form.value.cellNumber,
       startTime: this.start,
       endTime: this.end,
-      userId: this.userId,
+      userId:  this.userId,
+      bookerId:  this.bookerId,
       eventId: this.id,
   }).subscribe({
     error: (e) => console.error(e),

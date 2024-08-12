@@ -24,11 +24,16 @@ export class EventService {
 
   public create(event: any): Observable<any> 
   {
+    console.log("prePayment", event.prePayment);
     return this.httpClient.post(`${this.BASE_URL}/create`, {
       name: event.name,
       description: event.description,
       end_date: event.end_date,
       user_id: event.user_id,
+      location: event.location,
+      prePayment: event.prePayment.toString(),
+      slots: event.slots,
+      price: event.price,
     });
   }
 
@@ -40,6 +45,10 @@ export class EventService {
       description: event.description,
       end_date: event.end_date,
       user_id: event.user_id,
+      location: event.location,
+      prePayment: event.prePayment.toString(),
+      slots: event.slots,
+      price: event.price,
     });
   }
 

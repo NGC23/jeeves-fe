@@ -36,4 +36,9 @@ export class LocalStorageService {
     await this.init();
     return await this._storage?.get(key);
   }
+
+  public async clearAll(): Promise<any> {
+    await this.init();
+    return await this._storage?.clear();
+  }
 }

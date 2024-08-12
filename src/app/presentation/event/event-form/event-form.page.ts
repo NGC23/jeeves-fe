@@ -18,6 +18,7 @@ export class EventFormPage implements OnInit {
 
   id: string = '';
 
+  prePayment:boolean = false;
   event: any = {};
   showStart:boolean = false;
   showEnd:boolean = false;
@@ -53,6 +54,10 @@ export class EventFormPage implements OnInit {
           Validators.required
         ])
       ),
+      location: new FormControl(),
+      price: new FormControl(),
+      slots: new FormControl(0),
+      prePayment: new FormControl(),
       // startDate: new FormControl(this.startTime),
       // endDate: new FormControl(this.endTime),
     });
@@ -78,6 +83,10 @@ export class EventFormPage implements OnInit {
             Validators.required
           ])
         ),
+        location: new FormControl(),
+        price: new FormControl(),
+        slots: new FormControl(),
+        prePayment: new FormControl(),
         // startDate: new FormControl(this.startTime),
         // endDate: new FormControl( this.endTime),
       });
@@ -96,6 +105,8 @@ export class EventFormPage implements OnInit {
       await this.displayMessage("Issue creating Event, please ensure all values are filled in correctly", "warning-outline");
       return;
     }
+
+    console.log("form values", this.form.value);
 
     if (this.id !== '') {
       this.update(
@@ -131,6 +142,10 @@ export class EventFormPage implements OnInit {
         description: event.description,
         all_day: this.allDay,
         user_id: userId,
+        location: event.location,
+        prePayment: this.prePayment,
+        slots: event.slots,
+        price: event.price,
     }).subscribe({
       error: (e) => console.error(e),
       complete: () => {
@@ -150,6 +165,10 @@ export class EventFormPage implements OnInit {
         description: event.description,
         all_day: this.allDay,
         user_id: userId,
+        location: event.location,
+        prePayment: this.prePayment,
+        slots: event.slots,
+        price: event.price,
     }).subscribe({
       error: async (e) => {
         await this.displayMessage("Issue creating Event, if issue persists please contact support", "warning-outline");

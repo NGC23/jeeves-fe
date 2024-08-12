@@ -46,7 +46,7 @@ const routes: Routes = [
     loadChildren: () => import('./presentation/booking/booking.module').then( m => m.BookingPageModule)
   },
   {
-    path: 'my-bookable-events/:id',
+    path: 'events/:id',
     loadChildren: () => import('./presentation/user-booking-page/user-booking-page.module').then( m => m.UserBookingPagePageModule)
   },
   {
@@ -54,7 +54,7 @@ const routes: Routes = [
     loadChildren: () => import('./presentation/login/login.module').then( m => m.LoginPageModule)
   },
   {
-    path: 'register',
+    path: 'register/:type',
     loadChildren: () => import('./presentation/register/register.module').then( m => m.RegisterPageModule)
   },
   {
@@ -76,6 +76,14 @@ const routes: Routes = [
   {
     path: 'booking/details/:id',
     loadChildren: () => import('./presentation/user-booking-detail/user-booking-detail.module').then( m => m.UserBookingDetailPageModule)
+  },
+  {
+    path: 'booker/bookings',
+    loadChildren: () => import('./presentation/user-booking-management/user-booking-management.module').then( m => m.UserBookingManagementPageModule)
+  },
+  {
+    path: 'not-found',
+    loadChildren: () => import('./presentation/not-found/not-found.module').then( m => m.NotFoundPageModule)
   }
 ];
 

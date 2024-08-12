@@ -20,6 +20,7 @@ export class BookingService {
       startTime: booking.startTime,
       endTime: booking.endTime,
       bookerDetails: {
+        bookerId: booking.bookerId,
         firstName: booking.firstName,
         lastName:  booking.lastName,
         cellNumber:  booking.cellNumber,
@@ -31,6 +32,11 @@ export class BookingService {
   public async getAllBookings(userId: string): Promise<any> 
   {
     return this.httpClient.get(`${this.BASE_URL}/${userId}`).toPromise();
+  }
+
+  public async getAllBookingsByBookerId(bookerId: string): Promise<any> 
+  {
+    return this.httpClient.get(`${this.BASE_URL}/booker/${bookerId}`).toPromise();
   }
 
   public async getById(bookingId: string): Promise<any> 

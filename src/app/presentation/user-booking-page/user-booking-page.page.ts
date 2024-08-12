@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterStateSnapshot } from '@angular/router';
 import { NavController, MenuController, LoadingController } from '@ionic/angular';
 import { EventService } from 'src/app/services/event/event.service';
 import { LocalStorageService } from 'src/app/services/general/local-storage/local-storage.service';
@@ -11,12 +11,14 @@ import { LocalStorageService } from 'src/app/services/general/local-storage/loca
 })
 export class UserBookingPagePage implements OnInit {
   
+  returnUrl: string = '';
   tableStyle = 'material';
   data:any = [];
   loaded:boolean = false;
   showStart:boolean = false;
   showEnd:boolean = false;
   userId: string = '';
+  booker:any=[];
   newEvent:any = {
     title: '',
     allDay: false,
@@ -27,7 +29,7 @@ export class UserBookingPagePage implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private localStoage: LocalStorageService,
+    private localStorageService: LocalStorageService,
     private eventService: EventService,
     private loadingCtrl: LoadingController,
     public navCtrl: NavController,
@@ -35,19 +37,38 @@ export class UserBookingPagePage implements OnInit {
   ) { }
 
   async ngOnInit() {
-    this.menuCtrl.enable(false);
-
-    this.userId = this.route.snapshot.paramMap.get('id') ?? '';
-
-    console.info("booking page loaded");
-  }
-  
-  async ionViewDidEnter(){
     const loading = await this.loadingCtrl.create({
       message: 'loading...',
     });
+    
     loading.present();
 
+    this.menuCtrl.enable(false);
+
+    this.userId = this.route.snapshot.paramMap.get('id') ?? '';
+    
+    await this.localStorageService.get("user").then((data:any) => {
+
+      if(!data) {
+        console.warn("No user detected");
+        return;
+      }
+
+      switch(data.user.type) {
+        case "booker":
+          this.booker = data.user;
+          console.info("current booker set", this.booker);
+          break;
+        case "user":
+          console.info("current admin user set, which is type user, we will create property for this soon", data);
+          break;
+        default:
+          console.warn("Invalid user detected");
+          this.router.navigateByUrl("login");
+          break;
+      }
+    });
+    
     await this.loadEvents();
 
     loading.dismiss();

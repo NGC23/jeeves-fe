@@ -20,28 +20,6 @@ export class BookingPage implements OnInit {
   userId: string = '';
   showStart:boolean = false;
   showEnd:boolean = false;
-  // rows = [
-  //   {
-  //     "name": "Ethel Price",
-  //     "gender": "female",
-  //     "age": 22
-  //   },
-  //   {
-  //     "name": "Claudine Neal",
-  //     "gender": "female",
-  //     "age": 55
-  //   },
-  //   {
-  //     "name": "Beryl Rice",
-  //     "gender": "female",
-  //     "age": 67
-  //   },
-  //   {
-  //     "name": "Simon Grimm",
-  //     "gender": "male",
-  //     "age": 28
-  //   }
-  // ];
   
   constructor(
     private router: Router,
@@ -62,6 +40,7 @@ export class BookingPage implements OnInit {
     loading.present();
 
     await this.localStorage.get("user").then(async (data) => {
+      console.log("current logged in user", data);
       this.userId = data.user.id;
       await this.bookingService.getAllBookings(this.userId).then((events) => {
         console.log("events", events);

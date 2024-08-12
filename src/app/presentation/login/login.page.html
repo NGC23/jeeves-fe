@@ -21,7 +21,8 @@
     
         <ion-button type="submit" fill="outline" expand="block">{{this.buttonTitle}}</ion-button>
       </form>
-      <ion-button type="button" (click)="redirectUserToSignUpPage()" fill="outline" expand="block">{{this.buttonRegisterTitle}}</ion-button>
+      <ion-button type="button" (click)="redirectUserToSignUpPage('user')" fill="outline" expand="block">{{this.buttonRegisterUserTitle}}</ion-button>
+      <ion-button type="button" (click)="redirectUserToSignUpPage('booker')" fill="outline" expand="block">{{this.buttonRegisterTitle}}</ion-button>
     </ion-col>
   </ion-row>
 </ion-content>

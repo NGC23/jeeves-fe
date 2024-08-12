@@ -1,0 +1,24 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>My booking page</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-row>
+    <ion-col *ngFor="let booking of bookings; let i = index" size-sm="12" size-md="12" size-lg="4">
+      <ion-card>
+        <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
+        <ion-card-header>
+          <ion-card-title>{{booking.eventName}}</ion-card-title>
+        </ion-card-header>
+      
+        <ion-card-content>
+        <b>Booking Time:</b>  {{booking.startTime}} - {{booking.endTime}}
+        </ion-card-content>
+        <ion-button fill="clear" href="booking/reschedule/{{this.booking.id}}">Reschedule</ion-button>
+        <ion-button fill="clear" href="booking/cancel/{{this.booking.id}}">Cancel</ion-button>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+</ion-content>

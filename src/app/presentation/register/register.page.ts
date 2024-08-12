@@ -1,7 +1,7 @@
 import { LocalStorageService } from 'src/app/services/general/local-storage/local-storage.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MenuController, ToastController, LoadingController } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 
@@ -12,10 +12,12 @@ import { AuthenticationService } from 'src/app/services/authentication/authentic
 })
 export class RegisterPage implements OnInit {
 
+  type: string = '';
+
   form!: FormGroup;
   loading!: HTMLIonLoadingElement;
   
-  buttonTitle: string = "Register";
+  buttonTitle: string = "Create Profile";
   pageTitle: string = "Register";
 
   constructor(
@@ -24,7 +26,8 @@ export class RegisterPage implements OnInit {
 		private toastController: ToastController,
     private loadingCtrl: LoadingController,
     private authService: AuthenticationService,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    private route: ActivatedRoute,
   ) { }
 
   async ngOnInit() 
@@ -53,6 +56,7 @@ export class RegisterPage implements OnInit {
         ])
       ),
     });
+
     //Create loader
     this.loading = await this.loadingCtrl.create({
       message: 'Loading...',
@@ -65,6 +69,8 @@ export class RegisterPage implements OnInit {
   {
     this.loading.present();
 
+    this.type = this.route.snapshot.paramMap.get('type') ?? '';
+
     if(!this.form.valid) {
       console.log(this.form);
       this.loading.dismiss();
@@ -75,7 +81,8 @@ export class RegisterPage implements OnInit {
     console.log(this.form);
     this.authService.register(
       this.form.value.email,
-      this.form.value.password
+      this.form.value.password,
+      this.type
     ).subscribe({
       error: async (e) => { 
         await this.displayMessage("Issue creating Profile, if issue persists please contact support", "warning-outline");

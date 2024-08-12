@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { LocalStorageService } from './services/general/local-storage/local-storage.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -52,12 +54,17 @@ export class AppComponent {
     //   url: '/settings', 
     //   icon: 'settings' 
     // },
-    { 
-      title: 'Logout',
-      url: '/logout', 
-      icon: 'exit' 
-    }
   ];
   
-  constructor() {}
+  constructor(
+    private router: Router,
+    public localStorageService: LocalStorageService,
+  ) {}
+
+  async logout() {
+    console.log("logged out...");
+    await this.localStorageService.clearAll();
+    this.router.navigateByUrl("login");
+    return;
+  }
 }

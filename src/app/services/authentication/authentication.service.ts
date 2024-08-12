@@ -25,11 +25,13 @@ export class AuthenticationService {
 
   public register(
     email: string, 
-    password: string
+    password: string,
+    type: string
   ):  Observable<any>  {
     return this.httpClient.post(`${this.BASE_URL}/register`, {
       email: email,
-      password: password
+      password: password,
+      type: type
     });
   }
 }

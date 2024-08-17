@@ -166,7 +166,7 @@ export class EventFormPage implements OnInit {
         all_day: this.allDay,
         user_id: userId,
         location: event.location,
-        prePayment: this.prePayment,
+        prePayment: event.prePayment ?? false,
         slots: event.slots,
         price: event.price,
     }).subscribe({

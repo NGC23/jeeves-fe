@@ -118,8 +118,7 @@ export class UserBookingFormPage implements OnInit {
 
   private async getEvent(id: string, userId: string){
     await this.eventService.getById(
-      id, 
-      userId
+      id
     ).then((data: any) => {
       this.event = {
         id: data.id,

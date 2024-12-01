@@ -47,17 +47,21 @@ export class EventDetailPage implements OnInit {
   }
 
   private fetchEvent(id: string) {
-    this.eventService.getById(id, this.userId).then((data: any) => {
+    this.eventService.getById(id).then((data: any) => {
       console.log("booking event",data);
       this.event = {
         id: data.id,
         title: data.name,
+        image_url: data.image_url,
         allDay: false,
         startTime: new Date(data.startTime),
         endTime: new Date(data.endTime),
         description: data.description,
-        userId: data.userId  
+        userId: data.userId,  
+        eventDetails: data.eventDetails  
       };
+      console.log("event",this.event);
+
     });
   }
 }

@@ -84,6 +84,26 @@ const routes: Routes = [
   {
     path: 'not-found',
     loadChildren: () => import('./presentation/not-found/not-found.module').then( m => m.NotFoundPageModule)
+  },
+  {
+    path: 'booking/view/:eventId/:bookingId',
+    loadChildren: () => import('./presentation/user-booking-page-view/user-booking-page-view/user-booking-page-view.module').then( m => m.UserBookingPageViewPageModule)
+  },
+  {
+    path: 'booking/cancel/:id',
+    loadChildren: () => import('./presentation/booking-canceled/booking-canceled/booking-canceled.module').then( m => m.BookingCanceledPageModule)
+  },
+  {
+    path: 'booking/update/:userId/:eventId/:bookingId',
+    loadChildren: () => import('./presentation/reschedule-event/reschedule-event.module').then( m => m.RescheduleEventPageModule)
+  },
+  {
+    path: 'calendar-settings/:userId',
+    loadChildren: () => import('./presentation/calendar-settings/calendar-settings.module').then( m => m.CalendarSettingsPageModule)
+  },
+  {
+    path: 'user-settings/:userId',
+    loadChildren: () => import('./presentation/user-profile-form/user-profile-form/user-profile-form.module').then( m => m.UserProfileFormPageModule)
   }
 ];
 

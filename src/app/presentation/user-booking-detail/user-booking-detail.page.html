@@ -8,15 +8,38 @@
 
 <ion-content [fullscreen]="true">
   <div class="post-background">
-    <ion-img src="https://ionicframework.com/docs/img/demos/card-media.png" alt='test' class="ion-align-self-end"></ion-img>
+    <ion-img src="{{this.event.image_url}}" alt='test' class="ion-align-self-end"></ion-img>
     <h2>{{this.event.title}}</h2>
   </div>
   <ion-row>
-    <ion-col size="2"></ion-col>
     <ion-col size-sm="12" size-md="12" size-lg="12">
-      <p>{{this.event.description}}</p>
-
+      <div [innerHTML]="this.event.description"></div>
     </ion-col>
-    <ion-col size="2"></ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col size-sm="12" size-md="12" size-lg="12">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Event Details</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-list>
+            <ion-item>
+              Duration: {{this.event.eventDetails?.duration}} <small>(Minutes)</small>
+            </ion-item>
+            <ion-item>
+              Price: {{this.event.eventDetails?.price}}
+            </ion-item>
+            <ion-item>
+              Location: {{this.event.eventDetails?.location}}
+            </ion-item>
+            <ion-item>
+              Pre-Payment Required: {{this.event.eventDetails?.prePayment === true ? "yes" : "no"}}
+            </ion-item>
+          </ion-list>
+        </ion-card-content>
+        <ion-button fill="clear"  href="event/book/{{this.event.id}}/{{this.event.userId}}">Book Now</ion-button>
+        </ion-card>
+    </ion-col>
   </ion-row>
 </ion-content>

@@ -10,36 +10,80 @@
 
 <ion-content [fullscreen]="true">
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    
-    <ion-item>
-      <ion-label position="floating" color="primary">Name</ion-label>
-      <ion-input type="text" formControlName="name"></ion-input>
-    </ion-item>
+    <ion-row>
+      <ion-col [size]="12" [sizeMd]="12" [sizeLg]="12" [sizeSm]="12" [sizeXs]="12">
+        <ion-item>
+          <ion-label position="floating" color="primary">Name</ion-label>
+          <ion-input type="text" formControlName="name"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
 
-    <ion-item>
-      <ion-label position="floating" color="primary">Description</ion-label>
-      <ion-textarea formControlName="description"></ion-textarea>
-    </ion-item>
+    <ion-row>
+      <ion-col [size]="12" [sizeSm]="12" [sizeXs]="12">
+        <ion-item>
+          <ion-label position="floating" color="primary">Description</ion-label>
+          <div style="width:100%;" [froalaEditor] [(froalaModel)]="event.description" formControlName="description" name="description" ></div>
+        </ion-item>
+      </ion-col>
+    </ion-row>
 
-    <ion-item>
-      <ion-label position="floating" color="primary">Location</ion-label>
-      <ion-input type="text" formControlName="location"></ion-input>
-    </ion-item>
+    <ion-row>
+      <ion-col [size]="6" [sizeMd]="6" [sizeLg]="6" [sizeSm]="12" [sizeXs]="12">
+        <ion-item>
+          <ion-label position="floating" color="primary">Price</ion-label>
+          <ion-input type="text" formControlName="price"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col [size]="6" [sizeMd]="6" [sizeLg]="6" [sizeSm]="12" [sizeXs]="12">
+        <ion-item>
+          <ion-label position="floating" color="primary">Slots</ion-label>
+          <ion-input type="number" formControlName="slots"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
 
-    <ion-item>
-      <ion-label position="floating" color="primary">Price</ion-label>
-      <ion-input type="text" formControlName="price"></ion-input>
-    </ion-item>
+    <ion-row>
+      <ion-col [size]="6" [sizeMd]="6" [sizeLg]="6" [sizeSm]="12" [sizeXs]="12">
+        <ion-item>
+          <ion-label position="floating" color="primary">Duration<small>(in minutes, i.e 90 for 1h30 minutes)</small></ion-label>
+          <ion-input type="number" formControlName="duration"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col [size]="6" [sizeMd]="6" [sizeLg]="6" [sizeSm]="12" [sizeXs]="12">
+        <ion-item>
+          <ion-label position="floating" color="primary">Location</ion-label>
+          <ion-input type="text" formControlName="location"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
 
-    <ion-item>
-      <ion-label position="floating" color="primary">Slots</ion-label>
-      <ion-input type="number" formControlName="slots"></ion-input>
-    </ion-item>
+    <ion-row>
+      <ion-col [size]="6"  [sizeMd]="6" [sizeLg]="6" [sizeSm]="12" [sizeXs]="12">
+        <ion-item>
+          <ion-label position="floating" color="primary">Pre Payment Required</ion-label>
+          <ion-checkbox color="secondary" value="option" formControlName="prePayment"></ion-checkbox>
+        </ion-item>
+      </ion-col>
+      <ion-col [size]="6"></ion-col>
+    </ion-row>
 
-    <ion-item>
-      <ion-label position="floating" color="primary">Pre Payment Required</ion-label>
-      <ion-checkbox color="secondary" value="option" formControlName="prePayment"></ion-checkbox>
-    </ion-item>
+    <ion-row>
+      <ion-col [size]="12"  [sizeMd]="12" [sizeLg]="12" [sizeSm]="12" [sizeXs]="12">
+        <ion-item>
+          <ion-button expand="block" fill="outline">
+            <ion-icon lazy="true" slot="start" name="image"></ion-icon>
+            <input type="file" (change)="loadImageFromDevice($event)" id="file-input"
+              accept="image/png, image/jpeg" value="{{this.event.coverImage || ''}}">
+          </ion-button>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <!-- <ion-row>
+      <ion-col [size]="6"></ion-col>
+      <ion-col [size]="6"></ion-col>
+    </ion-row> -->  
 
     <ion-button type="submit" fill="outline" expand="block">{{this.buttonTitle}}</ion-button>
 

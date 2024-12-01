@@ -8,7 +8,7 @@ import { SERVER_URL } from 'src/environments/environment';
 })
 export class BookingService {
 
-  private BASE_URL: string = `${SERVER_URL}//bookings`;
+  private BASE_URL: string = `${SERVER_URL}/bookings`;
 
   constructor(private httpClient: HttpClient) { }
 
@@ -29,6 +29,17 @@ export class BookingService {
     });
   }
 
+  public reschedule(booking: any): Observable<any> 
+  {
+    return this.httpClient.patch(`${this.BASE_URL}/reschedule`, {
+      id: booking.id,
+      userId: booking.userId,
+      eventId: booking.eventId,
+      startTime: booking.startTime,
+      endTime: booking.endTime,
+    });
+  }
+
   public async getAllBookings(userId: string): Promise<any> 
   {
     return this.httpClient.get(`${this.BASE_URL}/${userId}`).toPromise();
@@ -42,6 +53,11 @@ export class BookingService {
   public async getById(bookingId: string): Promise<any> 
   {
     return this.httpClient.get(`${this.BASE_URL}/details/${bookingId}`).toPromise();
+  }
+
+  public async cancel(bookingId: string): Promise<any> 
+  {
+    return this.httpClient.delete(`${this.BASE_URL}/delete/${bookingId}`).toPromise();
   }
 
   public async getAllBookingsForEventAndUserId(

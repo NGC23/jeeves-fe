@@ -21,7 +21,7 @@ export class LoginPage implements OnInit {
   
   buttonTitle: string = "Login";
   buttonRegisterTitle: string = "Register me as a booker";
-  buttonRegisterUserTitle: string = "Register me as a user that will manage bookings and create events";
+  buttonRegisterUserTitle: string = "Sign up";
   pageTitle: string = "Login";
 
   constructor(

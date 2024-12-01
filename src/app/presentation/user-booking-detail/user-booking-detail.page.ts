@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoadingController, MenuController } from '@ionic/angular';
 import { EventService } from 'src/app/services/event/event.service';
+import * as moment from 'moment';
 import { LocalStorageService } from 'src/app/services/general/local-storage/local-storage.service';
 
 @Component({
@@ -14,6 +15,7 @@ export class UserBookingDetailPage implements OnInit {
   id: string = '';
   userId: string = '1';
   event: any = {};
+  momentjs: any = moment;
 
   constructor(  
     private route: ActivatedRoute,
@@ -50,7 +52,7 @@ export class UserBookingDetailPage implements OnInit {
   }
 
   private fetchEvent(id: string) {
-    this.eventService.getById(id, this.userId).then((data: any) => {
+    this.eventService.getById(id).then((data: any) => {
       console.log("booking event",data);
       this.event = {
         id: data.id,
@@ -59,8 +61,12 @@ export class UserBookingDetailPage implements OnInit {
         startTime: new Date(data.startTime),
         endTime: new Date(data.endTime),
         description: data.description,
-        userId: data.userId  
+        image_url: data.image_url,
+        userId: data.userId,  
+        eventDetails: data.eventDetails  
       };
+      console.log("event",this.event);
+
     });
   }
 }

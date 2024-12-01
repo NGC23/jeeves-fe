@@ -8,6 +8,7 @@ export const environment = {
 
 
 export const SERVER_URL = 'http://127.0.0.1:8080';
+export const FE_URL = 'http://localhost:8100';
 
 /*
  * For easier debugging in development mode, you can import the following file

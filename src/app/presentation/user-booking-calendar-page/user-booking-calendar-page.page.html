@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title class="text-center">Add dynamic title</ion-title>
+    <ion-title class="text-center"  style="text-align:center;">{{this.profileSettings?.companyName || "Please set company name in settings"}}</ion-title>
     <ion-buttons slot="end">
       <ion-button expand="block" (click)="today()">Today</ion-button>
     </ion-buttons>
@@ -38,12 +38,15 @@
   [monthviewDisplayEventTemplate]="monthviewDisplayEventTemplate"
   [calendarMode]="calendar.mode"
   (onTitleChanged) = "viewTitle = $event"
-  [startingDayWeek]="1"
-  [startHour]="6"
-  [endHour]="22"
+  [startHour]="this.startHour"
+  [endHour]="this.endHour"
   (onTimeSelected)="onTimeSelected($event)"
   (onEventSelected)="onEventSelected($event)"
   [queryMode]="calendar.queryMode"
+  [timeInterval]="this.calendar.timeInterval"
+  formatHourColumn="HH:mm" 
+  [startingDayMonth]=1
+  [startingDayWeek]=1
   >
   </calendar>
 

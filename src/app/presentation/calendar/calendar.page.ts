@@ -18,6 +18,7 @@ export class CalendarPage implements OnInit {
     @ViewChild(CalendarComponent) myCal!:CalendarComponent;
 
     userId: string = '';
+    user: any = {};
 
     calendar = {
         mode: "month" as CalendarMode,
@@ -92,9 +93,10 @@ export class CalendarPage implements OnInit {
         await this.localStoage.get("user").then((data) => {
             console.log("lol",data);
             this.userId = data.user.id;
+            this.user = data.user;
         });
 
-        await this.fetchAll(this.userId);
+        await this.fetchAll(this.user.id);
     }
 
     public async onRangeChanged(ev: any) 

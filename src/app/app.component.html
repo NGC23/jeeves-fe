@@ -14,21 +14,21 @@
           </ion-menu-toggle>
 
           <ion-menu-toggle auto-hide="false">
-            <ion-item (click)="logout()" lines="none" detail="false" routerLinkActive="selected">
+            <ion-item (click)="logout()" lines="none" detail="false" routerLinkActive="selected" id="logout" [style]="'cursor: pointer;'">
               <ion-icon aria-hidden="true" slot="start" [ios]="'exit-outline'" [md]="'exit-sharp'"></ion-icon>
               <ion-label>Logout</ion-label>
             </ion-item>
           </ion-menu-toggle>
         </ion-list>
 
-        <!-- <ion-list id="labels-list">
-          <ion-list-header>Labels</ion-list-header>
+        <ion-list id="labels-list">
+          <ion-list-header>Personal Booking Page Url</ion-list-header>
 
-          <ion-item *ngFor="let label of labels" lines="none">
+          <ion-item lines="none">
             <ion-icon aria-hidden="true" slot="start" ios="bookmark-outline" md="bookmark-sharp"></ion-icon>
-            <ion-label>{{ label }}</ion-label>
+            <ion-label><a href="{{ bookPageUrl }}">{{ bookPageUrl }}</a></ion-label>
           </ion-item>
-        </ion-list> -->
+        </ion-list>
       </ion-content>
     </ion-menu>
     <ion-router-outlet id="main-content"></ion-router-outlet>

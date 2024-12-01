@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title class="text-center">Add dynamic title</ion-title>
+    <ion-title class="text-center">{{this.user?.profile_settings?.companyName || "Please set company name in settings"}}</ion-title>
     <ion-buttons slot="end">
       <ion-button expand="block" (click)="today()">Today</ion-button>
     </ion-buttons>
@@ -45,15 +45,16 @@
   (onEventSelected)="onEventSelected($event)"
   [queryMode]="calendar.queryMode"
   [timeInterval]="30"
+  formatHourColumn="HH:mm"
   >
   </calendar>
 
-  <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+  <!-- <ion-fab vertical="bottom" horizontal="center" slot="fixed">
     <ion-fab-button href="/event/create">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-</ion-content>
+</ion-content> -->
 
 
 

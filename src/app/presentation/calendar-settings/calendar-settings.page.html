@@ -1,0 +1,47 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Calendar Settings</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <ion-item>
+      <p>Select start and end day of the week you want to show to users to book events</p>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating" color="primary">Start Day</ion-label>
+      <ion-select id="start_day" formControlName="start_day">
+        <ion-select-option *ngFor="let d of this.days" ngValue="d">{{ d }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating" color="primary">End Day</ion-label>
+      <ion-select id="end_day" formControlName="end_day">
+        <ion-select-option *ngFor="let d of this.days" ngValue="d">{{ d }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item-divider></ion-item-divider>
+    <ion-item>
+      <p>Select start and end time you want to show to users to book events</p>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating" color="primary">Starting Hour</ion-label>
+      <ion-select id="start_hour" formControlName="start_hour">
+        <ion-select-option *ngFor="let t of this.time" ngValue="d">{{ t }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    
+    <ion-item>
+      <ion-label position="floating" color="primary">Ending Hour</ion-label>
+      <ion-select id="end_hour" formControlName="end_hour">
+        <ion-select-option *ngFor="let t of this.time" ngValue="d">{{ t }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-button type="submit" fill="outline" expand="block">Save</ion-button>
+
+  </form>
+</ion-content>

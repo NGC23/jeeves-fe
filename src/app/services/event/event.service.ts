@@ -17,9 +17,9 @@ export class EventService {
     return this.httpClient.get(`${this.BASE_URL}/${userId}`).toPromise();
   }
 
-  public async getById(id: string, userId: string): Promise<any> 
+  public async getById(id: string): Promise<any> 
   {
-    return this.httpClient.get(`${this.BASE_URL}/details/${userId}/${id}`).toPromise();
+    return this.httpClient.get(`${this.BASE_URL}/details/${id}`).toPromise();
   }
 
   public create(event: any): Observable<any> 
@@ -34,6 +34,8 @@ export class EventService {
       prePayment: event.prePayment.toString(),
       slots: event.slots,
       price: event.price,
+      duration: event.duration,
+      coverImage: event.coverImage
     });
   }
 
@@ -49,6 +51,8 @@ export class EventService {
       prePayment: event.prePayment.toString(),
       slots: event.slots,
       price: event.price,
+      duration: event.duration,
+      coverImage: event.coverImage
     });
   }
 

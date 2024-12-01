@@ -1,0 +1,67 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="post-background">
+    <ion-img src="https://ionicframework.com/docs/img/demos/card-media.png" alt='test' class="ion-align-self-end"></ion-img>
+    <h2>{{this.event.title}}</h2>
+  </div>
+  <ion-row>
+    <ion-col size-sm="12" size-md="12" size-lg="12">
+      <div class="ion-text-center">
+        <ion-title>About the event:</ion-title>
+        <br>
+        <ion-text>{{this.event.description}}</ion-text>
+      </div>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col size-sm="6" size-md="6" size-lg="6">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Event Details</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-list>
+            <ion-item>
+              Duration: {{this.event.eventDetails?.duration}} <small>(Minutes)</small>
+            </ion-item>
+            <ion-item>
+              Price: {{this.event.eventDetails?.price}}
+            </ion-item>
+            <!-- <ion-item>
+             Paid: NA
+            </ion-item> -->
+          </ion-list>
+        </ion-card-content>
+        </ion-card>
+    </ion-col>
+    <ion-col size-sm="6" size-md="6" size-lg="6">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>My Booking Details</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-list>
+            <ion-item>
+              Start Time: {{this.booking.startTime}}
+            </ion-item>
+            <ion-item>
+              End Time: {{this.booking.endTime}}
+            </ion-item>
+            <ion-item>
+              Location: {{this.event.eventDetails?.location}}
+            </ion-item>
+          </ion-list>
+        </ion-card-content>
+        <ion-button fill="clear"  href="event/book/{{this.event.id}}/{{this.event.userId}}?bookingId={{this.bookingId}}">Reschedule</ion-button>
+        <ion-button fill="clear"  href="booking/cancel/{{this.booking.id}}">Cancel</ion-button>
+        </ion-card>
+    </ion-col>
+  </ion-row>
+</ion-content>

@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { EventFormPageRoutingModule } from './event-form-routing.module';
 
 import { EventFormPage } from './event-form.page';
+import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 
 @NgModule({
   imports: [
@@ -14,7 +15,9 @@ import { EventFormPage } from './event-form.page';
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
-    EventFormPageRoutingModule
+    EventFormPageRoutingModule,
+    FroalaEditorModule.forRoot(),
+    FroalaViewModule.forRoot()
   ],
   declarations: [EventFormPage]
 })

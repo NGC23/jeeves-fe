@@ -1,16 +1,44 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>settings</ion-title>
+    <ion-title>Settings</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">settings</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-row>
+    <ion-col [sizeXs]="12" [sizeSm]="12" [sizeMd]="6" [sizeLg]="6" [sizeXl]="6">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Calendar</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-list>
+            <ion-item>Work Days: {{this.calendarSettings?.startDay}} - {{this.calendarSettings?.endDay}}</ion-item>
+            <ion-item>Work Hours:  {{this.calendarSettings?.startHour}} - {{this.calendarSettings?.endHour}}</ion-item>
+          </ion-list>
+        </ion-card-content>
+        <ion-button fill="clear" href='calendar-settings/{{this.userId}}'>Configure</ion-button>
+      </ion-card>
+    </ion-col>
+    <ion-col [sizeXs]="12" [sizeSm]="12" [sizeMd]="6" [sizeLg]="6" [sizeXl]="6">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Profile</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-list>
+            <ion-item>Company Name: {{this.profileSettings?.companyName}}</ion-item>
+            <ion-item>First Name: {{this.profileSettings?.firstName}}</ion-item>
+            <ion-item>Last Name: {{this.profileSettings?.lastName}}</ion-item>
+            <ion-item>Email Address: {{this.profileSettings?.email}}</ion-item>
+          </ion-list>
+        </ion-card-content>
+        <ion-button fill="clear" href='user-settings/{{this.userId}}'>Configure</ion-button>
+      </ion-card>
+    </ion-col>
+    <ion-col [sizeXs]="12" [sizeSm]="12" [sizeMd]="8" [sizeLg]="4" [sizeXl]="4"></ion-col>
+  </ion-row>
 </ion-content>

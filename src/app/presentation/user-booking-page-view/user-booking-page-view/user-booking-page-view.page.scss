@@ -1,0 +1,27 @@
+ion-img {
+    border-radius: 15px;
+    object-fit: cover;
+    margin-top: calc(-1 * var(--ion-safe-area-top));
+  }
+  
+  .post-background {
+    position: relative;
+    display: flex;
+    padding-top: var(--ion-safe-area-top);
+    align-items: center;
+    flex-direction: row-reverse;
+    flex-wrap: wrap;
+    align-content: space-around;
+    justify-content: space-evenly;
+    background-color: currentcolor;
+  }
+  
+  .post-background h2 {
+    position: absolute;
+    bottom: 10px;
+    color: white;
+  }
+  
+  .md .post-background {
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px;
+  }

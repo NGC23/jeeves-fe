@@ -117,3 +117,16 @@ ion-note {
 ion-item.selected {
   --color: var(--ion-color-primary);
 }
+
+#logout {
+  cursor: pointer;
+}
+
+#logout:hover {
+  -webkit-filter: brightness(95%);
+  // -webkit-transition: all 1s ease;
+  // -moz-transition: all 1s ease;
+  // -o-transition: all 1s ease;
+  // -ms-transition: all 1s ease;
+  // transition: all 1s ease;
+}

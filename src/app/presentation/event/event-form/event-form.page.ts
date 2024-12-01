@@ -3,6 +3,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoadingController, ToastController } from '@ionic/angular';
 import { EventService } from 'src/app/services/event/event.service';
+import FroalaEditor from 'froala-editor';
+import 'froala-editor/js/plugins.pkgd.min.js';
 
 @Component({
   selector: 'app-event-form',
@@ -25,9 +27,18 @@ export class EventFormPage implements OnInit {
   allDay:boolean = false;
   startTime: string = new Date().toUTCString();
   endTime: string = new Date().toUTCString();
+  image:any;
   
   userId: string = '1'; //testing
   defaultHref: string = '';
+
+  public options: Object = {
+    listAdvancedTypes: true,
+    toolbarButtons: ['bold', 'italic', 'underline', 'paragraphFormat','alert','formatOL', 'formatUL'],
+    toolbarButtonsXS: ['bold', 'italic', 'underline', 'paragraphFormat','alert','formatOL', 'formatUL'],
+    toolbarButtonsSM: ['bold', 'italic', 'underline', 'paragraphFormat','alert','formatOL', 'formatUL'],
+    toolbarButtonsMD: ['bold', 'italic', 'underline', 'paragraphFormat','alert','formatOL', 'formatUL'],
+  };
 
   constructor(
     private eventService: EventService,
@@ -40,7 +51,7 @@ export class EventFormPage implements OnInit {
   //@todo: add validation rules to variable that we only have one set to maintain as this is room for failure
   async ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id') ?? '';
-    console.log("WTF????");
+
     this.form = new FormGroup({
       name: new FormControl(
         '',
@@ -57,6 +68,7 @@ export class EventFormPage implements OnInit {
       location: new FormControl(),
       price: new FormControl(),
       slots: new FormControl(0),
+      duration: new FormControl(0),
       prePayment: new FormControl(),
       // startDate: new FormControl(this.startTime),
       // endDate: new FormControl(this.endTime),
@@ -83,13 +95,17 @@ export class EventFormPage implements OnInit {
             Validators.required
           ])
         ),
-        location: new FormControl(),
-        price: new FormControl(),
-        slots: new FormControl(),
-        prePayment: new FormControl(),
+        location: new FormControl(this.event.eventDetails.location),
+        price: new FormControl(this.event.eventDetails.price),
+        slots: new FormControl(this.event.eventDetails.slots),
+        duration: new FormControl(this.event.eventDetails.duration),
+        prePayment: new FormControl(this.event.eventDetails.prePayment),
         // startDate: new FormControl(this.startTime),
         // endDate: new FormControl( this.endTime),
       });
+
+
+      console.log("this", this.event);
 
     }
   }
@@ -146,6 +162,8 @@ export class EventFormPage implements OnInit {
         prePayment: this.prePayment,
         slots: event.slots,
         price: event.price,
+        duration: event.duration,
+        coverImage: this.image
     }).subscribe({
       error: (e) => console.error(e),
       complete: () => {
@@ -169,6 +187,8 @@ export class EventFormPage implements OnInit {
         prePayment: event.prePayment ?? false,
         slots: event.slots,
         price: event.price,
+        duration: event.duration,
+        coverImage: this.image
     }).subscribe({
       error: async (e) => {
         await this.displayMessage("Issue creating Event, if issue persists please contact support", "warning-outline");
@@ -187,7 +207,8 @@ export class EventFormPage implements OnInit {
     id: string, 
     userId: string
   ): Promise<any> {
-    await this.eventService.getById(id, userId).then((data: any) => {
+    await this.eventService.getById(id).then((data: any) => {
+      console.log("data", data);
       this.event = {
         id: data.id,
         title: data.name,
@@ -195,7 +216,9 @@ export class EventFormPage implements OnInit {
         startTime: new Date(data.startTime),
         endTime: new Date(data.endTime),
         description: data.description,
-        userId: data.user_id  
+        userId: data.user_id,
+        eventDetails: data.eventDetails,  
+        coverImage: data.image_url,  
       };
     });
   }
@@ -219,4 +242,23 @@ export class EventFormPage implements OnInit {
 
 		await toast.present();
 	}
+
+  loadImageFromDevice(event:any): void {
+		
+		const file = event.target.files[0];
+		const reader = new FileReader();
+
+		reader.readAsDataURL(file);
+		
+		reader.onload = () => {
+		console.log("reader.result", reader.result);
+			this.image = reader.result;
+		};
+	
+		reader.onerror = (error) => {
+	
+			//handle errors
+	
+		};
+	};
 }
